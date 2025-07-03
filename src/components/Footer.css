@@ -1,0 +1,50 @@
+/* Footer.css */
+.footer {
+  background-color: #121212;
+  padding: 50px 0 30px;
+  position: relative;
+}
+
+.footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--primary-color), transparent);
+}
+
+.social-links {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 25px;
+}
+
+.social-links a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  margin: 0 10px;
+  color: #ffffff;
+  font-size: 18px;
+  transition: all 0.3s ease;
+}
+
+.social-links a:hover {
+  background-color: var(--primary-color);
+  color: #121212;
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(158, 240, 26, 0.3);
+}
+
+.copyright {
+  color: rgba(255, 255, 255, 0.7);
+  text-align: center;
+  font-size: 14px;
+  margin: 0;
+}
