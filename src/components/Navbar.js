@@ -6,6 +6,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeLink, setActiveLink] = useState('home');
+  const [isMobileView, setIsMobileView] = useState(false); // Renamed for clarity
 
   useEffect(() => {
     const handleScroll = () => {
@@ -14,11 +15,8 @@ const Navbar = () => {
       } else {
         setScrolled(false);
       }
-
-      // Update active link based on scroll position
       const sections = document.querySelectorAll('section');
       let currentSection = 'home';
-
       sections.forEach(section => {
         const sectionTop = section.offsetTop;
         const sectionHeight = section.clientHeight;
@@ -26,12 +24,21 @@ const Navbar = () => {
           currentSection = section.getAttribute('id');
         }
       });
-
       setActiveLink(currentSection);
     };
 
+    const checkMobileView = () => {
+      setIsMobileView(window.innerWidth <= 991);
+    };
+
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener('resize', checkMobileView);
+    checkMobileView(); // Initial check
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', checkMobileView);
+    };
   }, []);
 
   const toggleMenu = () => {
@@ -40,12 +47,15 @@ const Navbar = () => {
 
   const handleLinkClick = (e, id) => {
     e.preventDefault();
-    setIsOpen(false);
+    // Only close if it's the mobile menu that's open
+    if (isMobileView && isOpen) {
+      setIsOpen(false);
+    }
     
     const element = document.getElementById(id);
     if (element) {
       window.scrollTo({
-        top: element.offsetTop - 40,
+        top: element.offsetTop - 40, // Assuming navbar height consideration
         behavior: 'smooth'
       });
     }
@@ -107,6 +117,12 @@ const Navbar = () => {
     }
   };
 
+  // Variant for desktop: always visible, no transform.
+  const desktopMenuVariant = {
+    open: { opacity: 1, x: 0 }, // Stays in place
+    closed: { opacity: 1, x: 0 } // Stays in place (effectively always "open")
+  };
+
   return (
     <motion.nav 
       className={`navbar ${scrolled ? 'scrolled' : ''}`}
@@ -155,49 +171,61 @@ const Navbar = () => {
         </motion.div>
         
         <AnimatePresence>
-          <motion.div 
-            className={`navbar-menu ${isOpen ? 'active' : ''}`}
-            variants={mobileMenuVariants}
-            initial="closed"
-            animate={isOpen ? "open" : "closed"}
-          >
-            <ul className="navbar-nav">
-              {[
+          {/*
+            The div itself should always be rendered for CSS to apply.
+            The animation/variants control its *visual state*.
+            If !isMobileView, it should just be visible.
+            If isMobileView, it's controlled by isOpen.
+          */}
+          {(!isMobileView || isOpen) && ( // This condition ensures mobile menu is removed when closed to trigger AnimatePresence exit
+            <motion.div
+              className={`navbar-menu ${isMobileView && isOpen ? 'active' : ''}`}
+              key="mobileMenu" // Key for AnimatePresence when conditionally rendering
+              variants={isMobileView ? mobileMenuVariants : desktopMenuVariant}
+              initial="closed" // For mobile, this means x: '100%'. For desktop, x: 0.
+              animate={isMobileView ? (isOpen ? "open" : "closed") : "open"} // Desktop always "open"
+              exit={isMobileView ? "closed" : undefined} // Only mobile has exit animation
+              // Note: CSS for .navbar-menu needs to handle display:flex for desktop
+              // and appropriate display/position for mobile (e.g., when .active)
+            >
+              <ul className="navbar-nav">
+                {[
                 { id: 'home', label: 'Home' },
                 { id: 'about', label: 'About' },
                 { id: 'skills', label: 'Skills' },
                 { id: 'portfolio', label: 'Portfolio' },
                 { id: 'experience', label: 'Experience' },
                 { id: 'contact', label: 'Contact' }
-              ].map((item, index) => (
-                <motion.li 
-                  key={item.id}
-                  className="nav-item"
-                  variants={navItemVariants}
-                  custom={index}
-                  whileHover="hover"
-                  whileTap="tap"
-                >
-                  <a 
-                    href={`#${item.id}`} 
-                    className={`nav-link ${activeLink === item.id ? 'active' : ''}`}
-                    onClick={(e) => handleLinkClick(e, item.id)}
+                ].map((item, index) => (
+                  <motion.li
+                    key={item.id}
+                    className="nav-item"
+                    variants={navItemVariants}
+                    // custom={index} // Re-evaluate if needed with new structure
+                    whileHover="hover"
+                    whileTap="tap"
                   >
-                    {item.label}
-                    {activeLink === item.id && (
-                      <motion.div 
-                        className="active-indicator" 
-                        layoutId="activeIndicator"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ duration: 0.3 }}
-                      />
-                    )}
-                  </a>
-                </motion.li>
-              ))}
-            </ul>
-          </motion.div>
+                    <a
+                      href={`#${item.id}`}
+                      className={`nav-link ${activeLink === item.id ? 'active' : ''}`}
+                      onClick={(e) => handleLinkClick(e, item.id)}
+                    >
+                      {item.label}
+                      {activeLink === item.id && (
+                        <motion.div
+                          className="active-indicator"
+                          layoutId="activeIndicator"
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          transition={{ duration: 0.3 }}
+                        />
+                      )}
+                    </a>
+                  </motion.li>
+                ))}
+              </ul>
+            </motion.div>
+          )}
         </AnimatePresence>
       </div>
     </motion.nav>
