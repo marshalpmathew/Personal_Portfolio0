@@ -1,0 +1,31 @@
+<svg width="500" height="500" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background gradient -->
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6a2799;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#9ef01a;stop-opacity:0.8" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background circle -->
+  <circle cx="250" cy="250" r="240" fill="#121212" />
+  
+  <!-- Stylized face silhouette -->
+  <path d="M250,125 C200,125 160,165 160,215 C160,265 180,300 200,330 C220,360 235,375 250,375 C265,375 280,360 300,330 C320,300 340,265 340,215 C340,165 300,125 250,125 Z" fill="#333" />
+  
+  <!-- Hair -->
+  <path d="M250,125 C200,125 160,165 160,215 C160,225 161,235 163,244 C170,220 190,205 215,205 C240,205 260,220 270,244 C280,220 300,205 325,205 C335,205 345,208 353,214 C347,165 305,125 250,125 Z" fill="#111" />
+  
+  <!-- Neck -->
+  <path d="M220,330 L220,380 L280,380 L280,330 C270,340 260,345 250,345 C240,345 230,340 220,330 Z" fill="#333" />
+  
+  <!-- Shoulders -->
+  <path d="M220,380 L180,420 L320,420 L280,380 Z" fill="#222" />
+  
+  <!-- Decorative elements -->
+  <circle cx="215" cy="260" r="5" fill="#9ef01a" opacity="0.8" />
+  <circle cx="285" cy="260" r="5" fill="#9ef01a" opacity="0.8" />
+  
+  <!-- Subtle glow effect -->
+  <circle cx="250" cy="250" r="240" fill="url(#grad1)" opacity="0.1" />
+</svg>
