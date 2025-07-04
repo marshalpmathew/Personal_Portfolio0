@@ -121,3 +121,46 @@ textarea.form-control {
   border: 1px solid rgba(220, 53, 69, 0.3);
   color: #dc3545;
 }
+
+/* Submission Status Messages */
+.submission-status {
+  padding: 10px 15px;
+  margin-top: 15px; /* Space above the submit button */
+  margin-bottom: 15px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  text-align: center;
+  border: 1px solid transparent;
+  width: 100%; /* Ensure it takes available width */
+}
+
+.submission-status.success {
+  background-color: rgba(158, 240, 26, 0.15);
+  color: var(--primary-color); /* Using site's primary color for success text */
+  border-color: rgba(158, 240, 26, 0.3);
+}
+
+.submission-status.error {
+  background-color: rgba(220, 53, 69, 0.15); /* Using site's alert-danger style */
+  color: #dc3545;
+  border-color: rgba(220, 53, 69, 0.3);
+}
+
+.submission-status.info {
+  background-color: rgba(77, 159, 255, 0.15);
+  color: #4d9fff;
+  border-color: rgba(77, 159, 255, 0.3);
+}
+
+/* Ensure button disabled state is clear */
+.btn-primary-custom:disabled {
+  background-color: var(--text-muted, #888888); /* Fallback if --text-muted is not defined */
+  cursor: not-allowed;
+  opacity: 0.6;
+  transform: none; /* Prevent hover/active transforms */
+  box-shadow: none; /* Remove shadow when disabled */
+}
+
+.btn-primary-custom:hover:not(:disabled) {
+  /* Existing hover styles will apply if not disabled */
+}
