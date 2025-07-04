@@ -19,7 +19,24 @@ body {
     color: var(--text-light);
     line-height: 1.6;
     overflow-x: hidden;
+    /* Global transition removed from here to avoid conflicts with Framer Motion and more specific transitions */
 }
+
+/* CSS for new background floaters */
+.section {
+  position: relative; /* Ensure sections can contain absolutely positioned children */
+  overflow: hidden; /* Crucial to contain the floaters */
+}
+
+.background-floater {
+  opacity: 0.05; /* Default subtle opacity */
+  color: var(--primary-color); /* Default color, can be overridden by inline style if needed */
+  filter: blur(1px); /* Optional blur */
+  pointer-events: none; /* Prevent them from interfering with mouse events */
+  position: absolute; /* Will be positioned by inline styles in components */
+  z-index: -1; /* Default z-index, ensure content has higher or section isolates stacking context */
+}
+
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
