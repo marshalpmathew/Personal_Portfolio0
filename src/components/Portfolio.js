@@ -2,7 +2,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useInView } from 'react-intersection-observer';
 import { motion } from 'framer-motion';
-import { fadeInUp, staggerContainer } from '../animations';
+import { fadeInUp, staggerContainer, cardLift, iconPop, slideInUpBounce, rotateIn } from '../animations'; // Added cardLift, iconPop, slideInUpBounce, rotateIn
 
 const PortfolioItem = ({ icon, title, description, delay }) => {
   const { ref, inView } = useInView({
@@ -11,41 +11,50 @@ const PortfolioItem = ({ icon, title, description, delay }) => {
   });
 
   return (
-    <motion.div 
-      id={`portfolio-${title.replace(/\s+/g, '')}`}
-      ref={ref} 
-      className="portfolio-item"
-      variants={fadeInUp}
+    <motion.div // Outer container for entrance animation
+      ref={ref}
+      variants={slideInUpBounce} // Use new entrance animation
       initial="hidden"
       animate={inView ? "visible" : "hidden"}
       transition={{ delay: delay / 1000 }}
-      whileHover={{ 
-        y: -15, 
-        scale: 1.02, 
-        boxShadow: "0px 20px 40px rgba(158, 240, 26, 0.2)",
-        borderColor: "var(--primary-color)"
-      }}
     >
-      <motion.div 
-        className="portfolio-image"
-        whileHover={{ scale: 1.05 }}
-        transition={{ type: "spring", stiffness: 300 }}
+      <motion.div
+        id={`portfolio-${title.replace(/\s+/g, '')}`}
+        className="portfolio-item" // This is the card
+        variants={cardLift} // Apply cardLift for hover
+        initial="rest"
+        whileHover="hover"
+        // Removed direct transition and whileHover from here, now handled by cardLift variants
       >
         <motion.div
-          initial={{ scale: 1 }}
-          whileHover={{ 
-            scale: 1.2,
-            rotate: 5,
-            transition: { duration: 0.3 }
-          }}
+          className="portfolio-image"
+          // Optional: Add a subtle scale to the image container on item hover if desired,
+          // but cardLift is primary. Icon itself will have iconPop.
         >
-          <FontAwesomeIcon icon={icon} />
+          <motion.div // Icon wrapper for iconPop and/or rotateIn
+            variants={iconPop} // Using iconPop for the icon itself
+            initial="rest"
+            whileHover="hover"
+            whileTap="tap"
+            // Example if using rotateIn for icon's appearance:
+            // variants={inView ? rotateIn.visible : rotateIn.hidden}
+            // transition={{ delay: (delay / 1000) + 0.1 }}
+          >
+            {/* Apply rotateIn to the icon when it appears */}
+            <motion.div
+              variants={rotateIn}
+              initial="hidden"
+              animate={inView ? "visible" : "hidden"}
+              transition={{delay: (delay/1000) + 0.15}} // Slightly after card
+            >
+              <FontAwesomeIcon icon={icon} />
+            </motion.div>
+          </motion.div>
         </motion.div>
-      </motion.div>
-      <motion.div className="portfolio-content">
-        <motion.h4
-          initial={{ opacity: 0, y: 10 }}
-          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+        <motion.div className="portfolio-content">
+          <motion.h4
+            initial={{ opacity: 0, y: 10 }}
+            animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
           transition={{ delay: (delay / 1000) + 0.2 }}
         >
           {title}
