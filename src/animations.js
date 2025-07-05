@@ -9,6 +9,34 @@ export const fadeIn = {
   }
 };
 
+// Parallax-like entrance for headings
+export const headingParallaxUp = {
+  hidden: { opacity: 0, y: 70 }, // Start further down
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      type: "spring",
+      stiffness: 80, // Lower stiffness for a softer, slightly delayed feel
+      damping: 20,   // Good damping to prevent too much oscillation
+      // mass: 1 // Default mass is 1
+    }
+  }
+};
+
+export const headingParallaxDown = { // Optional: if needed for elements appearing from top
+  hidden: { opacity: 0, y: -70 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      type: "spring",
+      stiffness: 80,
+      damping: 20,
+    }
+  }
+};
+
 // Variation for slower/larger floating elements
 export const gentleFloat = {
   initial: { y: 0, opacity: 0.3 }, // Start with some opacity

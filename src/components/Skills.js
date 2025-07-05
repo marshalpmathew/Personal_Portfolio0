@@ -3,9 +3,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useInView } from 'react-intersection-observer';
 import { motion } from 'framer-motion';
 import {
-  fadeInUp, staggerContainer, scaleUp, cardLift, iconPop, rotateIn, slideInUpBounce, gentleFloat, drift
-} from '../animations';
-import { faCodeBranch, faLayerGroup } from '@fortawesome/free-solid-svg-icons'; // Example icons for skills section
+  fadeInUp, staggerContainer, scaleUp, cardLift, iconPop, rotateIn, slideInUpBounce, gentleFloat, drift, headingParallaxUp
+} from '../animations'; // Added headingParallaxUp
+import { faCodeBranch, faLayerGroup } from '@fortawesome/free-solid-svg-icons';
 
 // SkillItem structure remains as previously refactored (using slideInUpBounce, cardLift, iconPop, rotateIn)
 // The 'delay' prop is used for its internal animation sequencing relative to its appearance.
@@ -96,11 +96,7 @@ const Skills = () => {
     { icon: ['fas', 'chart-line'], title: 'Digital Marketing', description: 'SEO, Google Analytics, Social Media', progress: 75 },
   ];
 
-  // Variants for section elements
-  const sectionTitleVariants = {
-    hidden: { opacity: 0, y: -20, scale: 0.9 },
-    visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.6, ease: "easeOut" } }
-  };
+  // sectionTitleVariants is no longer needed here if using headingParallaxUp directly.
 
   // The main section will be a staggerContainer for its direct children (title, then the row of skills)
   // The row of skills will also be a staggerContainer for each skill column/item.
@@ -137,7 +133,7 @@ const Skills = () => {
 
       <motion.h2
         className="section-title-above"
-        variants={sectionTitleVariants} // Animates as part of section's stagger
+        variants={headingParallaxUp} // Apply new variant
       >
         MY SKILLS
       </motion.h2>

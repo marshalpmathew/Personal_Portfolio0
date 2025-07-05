@@ -1,10 +1,10 @@
-import React, { useState } from 'react'; // Added useState
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useInView } from 'react-intersection-observer';
-import { motion, AnimatePresence } from 'framer-motion'; // Added AnimatePresence
-import { fadeInUp, staggerContainer, cardLift, iconPop, slideInUpBounce, rotateIn } from '../animations';
+import { motion, AnimatePresence } from 'framer-motion';
+import { fadeInUp, staggerContainer, cardLift, iconPop, slideInUpBounce, rotateIn, headingParallaxUp } from '../animations'; // Added headingParallaxUp
 import { portfolioItemsData } from '../portfolioData';
-import ProjectModal from './ProjectModal'; // Import ProjectModal
+import ProjectModal from './ProjectModal';
 
 // PortfolioItem will now receive the full item object and a click handler
 const PortfolioItem = ({ item, delay, onViewProject }) => {
@@ -120,7 +120,7 @@ const Portfolio = () => {
       <motion.h2 
         className="section-title-above" 
         ref={sectionTitleRef}
-        variants={fadeInUp}
+        variants={headingParallaxUp} // Apply new variant
         initial="hidden"
         animate={sectionTitleInView ? "visible" : "hidden"}
       >

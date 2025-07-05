@@ -1,7 +1,9 @@
 import React from 'react';
 import { useInView } from 'react-intersection-observer';
 import { motion } from 'framer-motion';
-import { fadeInUp, scaleUp, staggerContainer, fadeIn, gentleFloat, drift } from '../animations'; // Added gentleFloat, drift
+import {
+  fadeInUp, scaleUp, staggerContainer, fadeIn, gentleFloat, drift, headingParallaxUp
+} from '../animations'; // Added headingParallaxUp
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShapes, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 
@@ -13,15 +15,7 @@ const About = () => {
   });
 
   // Variants for direct children of the section
-  const sectionTitleVariants = {
-    hidden: { opacity: 0, scale: 0.8, y: -20 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      y: 0,
-      transition: { duration: 0.6, ease: "easeOut" }
-    }
-  };
+  // sectionTitleVariants will be replaced by headingParallaxUp directly
 
   const aboutCardVariants = {
     hidden: { opacity: 0, y: 30 },
@@ -33,10 +27,11 @@ const About = () => {
   };
 
   // Variants for children of the about-card (will be staggered by aboutCardVariants)
-  const cardChildVariants = {
+  const cardChildVariants = { // Keep this for paragraphs, lists, etc.
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
   };
+  // headingParallaxUp will be used for the h3 directly.
 
 
   return (
@@ -84,7 +79,7 @@ const About = () => {
 
       <motion.h2
         className="section-title-above"
-        variants={sectionTitleVariants} // Uses its own variant, will be staggered by parent
+        variants={headingParallaxUp} // Apply new variant
       >
         ABOUT
       </motion.h2>
@@ -104,7 +99,7 @@ const About = () => {
               <motion.h3
                 className="mb-4"
                 style={{ color: 'var(--primary-color)' }}
-                variants={cardChildVariants} // Staggered by parent aboutCardVariants
+                variants={headingParallaxUp} // Apply new variant
               >
                 Showcasing My Web Portfolio Dreams
               </motion.h3>

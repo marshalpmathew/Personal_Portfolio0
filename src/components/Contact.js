@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { motion } from 'framer-motion';
-import { fadeInUp, fadeInLeft, fadeInRight, buttonHover, staggerContainer } from '../animations'; // Added staggerContainer
+import { fadeInUp, fadeInLeft, fadeInRight, buttonHover, staggerContainer, headingParallaxUp } from '../animations'; // Added headingParallaxUp
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faPhone, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import './Contact.css';
@@ -52,11 +52,11 @@ const Contact = () => {
     triggerOnce: true
   });
 
-  // Define variants for section structure
-  const sectionTitleVariants = {
-    hidden: { opacity: 0, y: -30, scale: 0.9 },
-    visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.6, ease: "easeOut" } }
-  };
+  // sectionTitleVariants is no longer needed here.
+  // const sectionTitleVariants = {
+  //   hidden: { opacity: 0, y: -30, scale: 0.9 },
+  //   visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.6, ease: "easeOut" } }
+  // };
 
   const columnContainerVariants = { // For the row containing the two main columns
     hidden: { opacity: 0 }, // Parent section (staggerContainer) handles initial opacity for the row itself
@@ -124,7 +124,7 @@ const Contact = () => {
     >
       <motion.h2
         className="section-title-above"
-        variants={sectionTitleVariants}
+        variants={headingParallaxUp} // Apply new variant
       >
         CONTACT ME
       </motion.h2>
@@ -138,10 +138,10 @@ const Contact = () => {
               className="contact-info-container"
               variants={leftColumnVariants}
             >
-              <motion.h3 className="mb-4" variants={formElementVariants}>
+              <motion.h3 className="mb-4" variants={headingParallaxUp}> {/* Apply new variant */}
                 Get In Touch
               </motion.h3>
-              <motion.p className="mb-4" variants={formElementVariants}>
+              <motion.p className="mb-4" variants={formElementVariants}> {/* Keep simple fadeInUp for paragraph */}
                 Feel free to reach out to me for any questions or opportunities. I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.
               </motion.p>
               

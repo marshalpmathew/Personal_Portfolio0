@@ -1,7 +1,7 @@
 import React from 'react';
 import { useInView } from 'react-intersection-observer';
 import { motion } from 'framer-motion';
-import { fadeInUp, staggerContainer, fadeInLeft, zoomIn } from '../animations'; // Added zoomIn for variety
+import { fadeInUp, staggerContainer, fadeInLeft, zoomIn, headingParallaxUp } from '../animations'; // Added headingParallaxUp
 
 // TimelineItem remains largely the same as its animation is self-contained based on its own inView or triggered by parent.
 // If triggered by parent stagger, it won't need its own useInView or delay prop for staggering.
@@ -28,11 +28,12 @@ const TimelineItem = ({ title, company, period, description }) => { // Removed d
       {/* Inner elements of TimelineItem can also have variants if needed, or simple initial/animate based on parent's state */}
       <motion.h4
         style={{ color: 'var(--primary-color)' }}
-        // Example of simple animation if not using variants here:
-        // initial={{ opacity: 0, x: -20 }}
-        // animate={{ opacity: 1, x: 0 }}
-        // transition={{ duration: 0.4, ease: "easeOut" }}
-        // If fadeInLeft variant itself staggers children, these would be variants={childVariant}
+        variants={headingParallaxUp} // Apply new variant
+        // The parent TimelineItem uses fadeInLeft, this h4 will animate with parallax
+        // as part of that sequence if TimelineItem's variant definition staggers its children,
+        // or if this h4's animation is simply triggered when TimelineItem becomes visible.
+        // Since TimelineItem's fadeInLeft doesn't explicitly stagger children, this h4's
+        // animation will occur as TimelineItem animates in.
       >
         {title}
       </motion.h4>
@@ -62,11 +63,7 @@ const Experience = () => {
     triggerOnce: true
   });
 
-  // Variants for section children
-  const sectionTitleVariants = {
-    hidden: { opacity: 0, y: -30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
-  };
+  // sectionTitleVariants is no longer needed if using headingParallaxUp directly.
 
   const timelineContainerVariants = {
     hidden: { opacity: 0 },
@@ -120,7 +117,7 @@ const Experience = () => {
       <div className="container">
         <motion.h2
           className="section-title"
-          variants={sectionTitleVariants} // Animates as part of section's stagger
+          variants={headingParallaxUp} // Apply new variant
         >
           My Experience
         </motion.h2>

@@ -48,8 +48,8 @@ function App() {
       let current = '';
       sections.forEach(section => {
         const sectionTop = section.offsetTop;
-        // Remove the unused variable
-        if (window.scrollY >= (sectionTop - 200)) {
+        // Adjusting offset slightly for parallaxing headings
+        if (window.scrollY >= (sectionTop - 180)) {
           current = section.getAttribute('id');
         }
       });
