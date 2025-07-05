@@ -37,6 +37,19 @@ body {
   z-index: -1; /* Default z-index, ensure content has higher or section isolates stacking context */
 }
 
+.hero-title-wrapper {
+  display: inline-block; /* Or block, depending on desired layout with surrounding elements */
+}
+
+.hero-title-encrypted {
+  opacity: 0.6; /* Make scrambled text a bit dimmer */
+  filter: blur(0.5px); /* Optional: slight blur for scrambled text */
+  /* Important: Ensure this doesn't override the gradient text color from .hero-title */
+  /* If .hero-title uses -webkit-text-fill-color: transparent, this is fine. */
+  /* If encrypted text needs a solid color, that would override the gradient for those chars. */
+  /* For now, assuming opacity/filter is enough and gradient remains. */
+}
+
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
